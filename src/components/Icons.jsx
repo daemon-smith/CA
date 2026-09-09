@@ -8,6 +8,7 @@ const paths = {
   cache: "M4 6h16v4H4zM4 10v4h16v-4M6 18h12",
   instructions: "M5 4h14v16H5zM8 8h8M8 12h8M8 16h5",
   performance: "M4 19h16M7 19V9M12 19V5M17 19v7",
+  documentation: "M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4zM8 4v13a3 3 0 0 0-3-3M11 8h5M11 12h5",
   info: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8v.01M11 11h1v6h1",
   sun: "M12 4V2M12 22v-2M4 12H2M22 12h-2M5 5 3.5 3.5M20.5 20.5 19 19M5 19l-1.5 1.5M20.5 3.5 19 5",
   moon: "M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z",

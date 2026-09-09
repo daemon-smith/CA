@@ -64,10 +64,6 @@ export default function AboutPage() {
         execution.
       </p>
 
-      <div className="about-hero panel">
-        <ChipHero />
-      </div>
-
       <div className="about-cards">
         <div className="panel about-card">
           <h3><Icon name="target" size={18} /> Objectives</h3>

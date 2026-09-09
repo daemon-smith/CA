@@ -108,11 +108,12 @@ export default function CpuSimulatorPage() {
           <Icon name={cpu.running ? "pause" : "play"} /> {cpu.running ? "Pause" : "Auto Run"}
         </button>
         <span className="clock-speed-control">
-          <span>Clock Speed:</span>
+          <span className="clock-speed-label">Clock<br />Speed:</span>
           <input
             type="range" min={150} max={1500} step={50}
             value={1650 - clockSpeedMs}
             onChange={e => setClockSpeed(1650 - Number(e.target.value))}
+            aria-label="Clock speed"
           />
         </span>
       </ActionBar>

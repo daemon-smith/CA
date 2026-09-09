@@ -11,6 +11,7 @@ import CacheSimulatorPage from "./pages/CacheSimulatorPage";
 import InstructionExecutionPage from "./pages/InstructionExecutionPage";
 import PerformanceAnalysisPage from "./pages/PerformanceAnalysisPage";
 import AboutPage from "./pages/AboutPage";
+import DocumentationPage from "./pages/DocumentationPage";
 import "./index.css";
 
 const PAGES = {
@@ -22,6 +23,7 @@ const PAGES = {
   "Cache Simulator": CacheSimulatorPage,
   "Instruction Execution": InstructionExecutionPage,
   "Performance Analysis": PerformanceAnalysisPage,
+  "Documentation": DocumentationPage,
   "About": AboutPage
 };
 
@@ -33,8 +35,8 @@ function Shell() {
     <div className="app">
       <Sidebar activePage={activePage} setActivePage={setActivePage} />
 
-      <main className="main">
-        <Header activePage={activePage} />
+      <main className={`main ${activePage === "Documentation" ? "documentation-main" : ""}`}>
+        {activePage !== "Documentation" && <Header activePage={activePage} />}
         <Page goTo={setActivePage} />
       </main>
     </div>
