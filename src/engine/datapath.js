@@ -1,7 +1,7 @@
 // Derives the control-unit signals and ALU operand/result view for the
 // instruction currently in the pipeline, straight from the parsed program +
-// live registers. Shared by the Home "Architecture Overview" diagram and the
-// CPU Simulator page so both read the same real state, nothing hard-coded.
+// live registers. Shared by simulator views so they read the same real state,
+// with nothing hard-coded.
 export function deriveDatapath(cpu) {
   const instr = cpu.fetchedIndex != null ? cpu.program[cpu.fetchedIndex] : null;
   const control = { RegWrite: 0, ALUSrc: 0, MemRead: 0, MemWrite: 0 };

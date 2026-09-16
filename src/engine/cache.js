@@ -23,7 +23,8 @@ export function configureCache({ cacheSize, blockSize, mapping }, memory) {
     setIndex: id % sets,
     valid: false,
     tag: null,
-    data: []
+    data: [],
+    lastUsed: -1
   }));
 
   return {
@@ -47,15 +48,20 @@ export function cacheAccess(cacheState, address, memory) {
   const hitLine = candidates.find(l => l.valid && l.tag === tag);
 
   const lines = cacheState.lines.map(l => ({ ...l }));
+  const accessTime = cacheState.accesses;
   let outcome;
 
   if (hitLine) {
+    const idx = lines.findIndex(l => l.id === hitLine.id);
+    lines[idx] = { ...lines[idx], lastUsed: accessTime };
     outcome = "Hit";
   } else {
     let victim = candidates.find(l => !l.valid);
     if (!victim) {
-      // simple round-robin replacement (pseudo-LRU) when the set is full
-      victim = candidates[cacheState.accesses % candidates.length];
+      // Replace the least-recently-used line within the selected set.
+      victim = candidates.reduce((oldest, line) =>
+        line.lastUsed < oldest.lastUsed ? line : oldest
+      );
     }
     const blockStart = blockIndex * blockSize;
     const data = [];
@@ -63,7 +69,7 @@ export function cacheAccess(cacheState, address, memory) {
       data.push(memory[(blockStart + i) % memory.length] ?? 0);
     }
     const idx = lines.findIndex(l => l.id === victim.id);
-    lines[idx] = { ...lines[idx], valid: true, tag, data };
+    lines[idx] = { ...lines[idx], valid: true, tag, data, lastUsed: accessTime };
     outcome = "Miss";
   }
 

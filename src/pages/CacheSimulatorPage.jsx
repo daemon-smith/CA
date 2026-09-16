@@ -11,13 +11,11 @@ export default function CacheSimulatorPage() {
   const [autoStepping, setAutoStepping] = useState(false);
   const intervalRef = useRef(null);
 
-  const mapping = cache.config.mapping === "Direct" ? "Direct" : "Assoc";
-
   function applyMapping(next) {
     cacheConfigure({
       cacheSize: Number(cacheSize),
       blockSize: Number(blockSize),
-      mapping: next === "Direct" ? "Direct" : "Fully Associative"
+      mapping: next
     });
   }
 
@@ -66,8 +64,20 @@ export default function CacheSimulatorPage() {
           <div className="config-row">
             <span>Mapping</span>
             <div className="segmented">
-              <button className={mapping === "Direct" ? "active" : ""} onClick={() => applyMapping("Direct")}>Direct</button>
-              <button className={mapping === "Assoc" ? "active" : ""} onClick={() => applyMapping("Assoc")}>Assoc</button>
+              {[
+                ["Direct", "Direct"],
+                ["2-Way", "2-Way"],
+                ["4-Way", "4-Way"],
+                ["Fully Associative", "Fully Assoc"]
+              ].map(([value, label]) => (
+                <button
+                  key={value}
+                  className={cache.config.mapping === value ? "active" : ""}
+                  onClick={() => applyMapping(value)}
+                >
+                  {label}
+                </button>
+              ))}
             </div>
           </div>
           <div className="config-row">
@@ -138,16 +148,18 @@ export default function CacheSimulatorPage() {
       </div>
 
       <div className="panel">
-        <p className="console-label">Cache Array ({cache.config.mapping === "Direct" ? "Direct Mapped" : "Associative"})</p>
+        <p className="console-label">Cache Array ({cache.config.mapping === "Direct" ? "Direct Mapped" : cache.config.mapping})</p>
         <div className="table-scroll">
           <table>
-            <thead><tr><th>Index</th><th>Valid</th><th>Tag</th><th>Data Block (Hex)</th></tr></thead>
+            <thead><tr><th>Index</th><th>Valid</th><th>Tag (Hex)</th><th>Data Block (Hex)</th></tr></thead>
             <tbody>
               {cache.lines.map(line => (
                 <tr key={line.id} className={line.valid ? "" : "invalid-row"}>
                   <td>{String(line.id).padStart(2, "0")}</td>
                   <td className={line.valid ? "yes-cell" : "no-cell"}>{line.valid ? "1" : "0"}</td>
-                  <td className="mono-cell">{line.valid ? line.tag : "-"}</td>
+                  <td className="mono-cell">
+                    {line.valid ? `0x${line.tag.toString(16).toUpperCase()}` : "-"}
+                  </td>
                   <td className="mono-cell">
                     {line.valid ? line.data.map(b => b.toString(16).toUpperCase().padStart(2, "0")).join(" ") : "-"}
                   </td>

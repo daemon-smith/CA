@@ -1,17 +1,3 @@
-const CONTENTS = [
-  "Getting Started",
-  "CPU Architecture",
-  "Fetch-Decode-Execute",
-  "Instruction Set",
-  "ALU (Arithmetic Logic Unit)",
-  "Registers",
-  "Memory",
-  "Cache Hierarchy",
-  "Performance Analysis",
-  "Running a Program",
-  "Controls & Interface"
-];
-
 const INSTRUCTIONS = [
   ["0001", "LOAD", "LOAD R1, [M]", "Load value from memory M into register R1"],
   ["0010", "STORE", "STORE R1, [M]", "Store value from register R1 into memory M"],
@@ -25,17 +11,6 @@ const INSTRUCTIONS = [
 export default function DocumentationPage() {
   return (
     <section className="documentation-page">
-      <aside className="docs-contents">
-        <p>Contents</p>
-        <nav>
-          {CONTENTS.map((item, index) => (
-            <a key={item} className={index === 0 ? "active" : ""} href={`#${item.toLowerCase().replace(/[^a-z]+/g, "-")}`}>
-              {item}
-            </a>
-          ))}
-        </nav>
-      </aside>
-
       <article className="docs-article">
         <header className="docs-heading" id="getting-started">
           <span>Documentation</span>
